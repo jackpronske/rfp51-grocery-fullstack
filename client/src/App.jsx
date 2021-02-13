@@ -1,5 +1,6 @@
 import React from 'react';
 import GroceryList from './GroceryList.jsx';
+import GroceryForm from './GroceryForm.jsx';
 import $ from 'jquery';
 
 // const App = () => {
@@ -37,7 +38,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-
+        <GroceryForm />
         <GroceryList groceryListItems={this.state.groceryListItems}/>
       </div>
     )

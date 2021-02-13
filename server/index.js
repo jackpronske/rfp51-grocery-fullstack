@@ -5,9 +5,10 @@ const app = express();
 const port = 8080;
 const cors = require("cors");
 // const db = require("../db/index.js");
-const query = require("../db/query.js");
+const db = require("../db/query.js");
 
 app.use(cors());
+app.use(express.json());
 
 //create a server endpoint for GET requests
 app.get('/', (req, res) => {
@@ -30,12 +31,24 @@ app.get('/groceryList', (req, res) => {
   //I need to moce this to its own file, I'll need to ponder over how to do this, but I think
   //it's easier than I'm thinking
     //for now, this is working solution for our server and DB!
-  query.select((err, data) => {
-    console.log('WHATTTTT')
+  db.select((err, data) => {
     if (err) {
-      res.status(500).send('ERROR CONNECTING TO DATABASE');
+      res.status(500).send(err);
     }
     res.status(200).send(data);
+  })
+})
+
+//paths for posting on groceryList
+//create a test first, so we can mess with postman
+
+app.post('/groceryList', (req, res) => {
+  let data = req.body;
+  db.insert(data, (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(201).send('SUCCESSFULLY POSTED')
   })
 })
 
