@@ -19,6 +19,8 @@ class App extends React.Component {
       ]
     }
 
+    this.addItemHandler = this.addItemHandler.bind(this);
+
   }
 
   componentDidMount() {
@@ -32,13 +34,16 @@ class App extends React.Component {
         })
       }
     })
+  }
 
+  addItemHandler() {
+    console.log('clicked the button');
   }
 
   render() {
     return (
       <div>
-        <GroceryForm />
+        <GroceryForm addItemHandler={this.addItemHandler}/>
         <GroceryList groceryListItems={this.state.groceryListItems}/>
       </div>
     )
