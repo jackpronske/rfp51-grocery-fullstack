@@ -36,8 +36,22 @@ class App extends React.Component {
     })
   }
 
-  addItemHandler() {
-    console.log('clicked the button');
+  addItemHandler(item) {
+    console.log(item);
+    let dataObject = {
+      groceryName: item,
+      quantity: 1
+    };
+    console.log(dataObject);
+
+    //post request here!
+    $.ajax('http://localhost:8080/groceryList', {
+      type: "POST",
+      data: dataObject,
+      success: () => {
+
+      }
+    })
   }
 
   render() {
