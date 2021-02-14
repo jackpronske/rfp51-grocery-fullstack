@@ -20,12 +20,11 @@ class App extends React.Component {
     }
 
     this.addItemHandler = this.addItemHandler.bind(this);
+    this.getRequest = this.getRequest.bind(this);
 
   }
 
-  componentDidMount() {
-    //here we'll have a ajaz get request to the localhost:8080 url
-    //on success, we're going to set the state to equal the information retreived by the servers query to the db
+  getRequest() {
     $.ajax('http://localhost:8080/groceryList', {
       type: "GET",
       success: (data) => {
@@ -34,6 +33,12 @@ class App extends React.Component {
         })
       }
     })
+  }
+
+  componentDidMount() {
+    //here we'll have a ajaz get request to the localhost:8080 url
+    //on success, we're going to set the state to equal the information retreived by the servers query to the db
+    this.getRequest();
   }
 
   addItemHandler(item) {
@@ -45,13 +50,22 @@ class App extends React.Component {
     console.log(dataObject);
 
     //post request here!
-    $.ajax('http://localhost:8080/groceryList', {
-      type: "POST",
-      data: dataObject,
-      success: () => {
+    // $.post('http://localhost:8080/groceryList', '{ "groceryName": "eggsshells", "quantity": "7000000" }', () => {
+    //   console.log('Client SIde SUcces');
+    // })
 
-      }
-    })
+    $.ajax({
+      url: 'http://localhost:8080/groceryList',
+      type: 'post',
+      dataType: 'json',
+      contentType: 'application/json',
+      complete: (data) => {
+        console.log(data);
+        this.getRequest()
+      },
+
+      data: JSON.stringify(dataObject)
+  });
   }
 
   render() {

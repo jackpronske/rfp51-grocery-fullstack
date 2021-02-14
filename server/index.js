@@ -44,12 +44,17 @@ app.get('/groceryList', (req, res) => {
 
 app.post('/groceryList', (req, res) => {
   let data = req.body;
+
+  console.log(data);
   db.insert(data, (err) => {
     if (err) {
+      console.log('error please' + err)
       res.status(500).send(err);
     }
-    res.status(201).send('SUCCESSFULLY POSTED')
+    console.log('suuuc')
+    res.status(200).end()
   })
+
 })
 
 app.listen(port, () => {
